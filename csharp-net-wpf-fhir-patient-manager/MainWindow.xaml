@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:csharp_net_wpf_fhir_patient_manager"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="400">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="0.4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
+        <StackPanel>
+            <TextBlock Text="Url" FontSize="10" Margin="5 5 0 0"></TextBlock>
+            <TextBox Name="txtFhirUrl" Width="auto" Margin="5" TextChanged="txtFhirUrl_TextChanged"></TextBox>
+            <ScrollViewer>
+                <ListView Name="lvPatients" Grid.Row="0" Margin="5" FontSize="10" Width="auto" Height="auto"></ListView>
+            </ScrollViewer>
+        </StackPanel>
+            
+        
+        <StackPanel Grid.Column="1">
+            <Button Name="btnAdd" Width="100" Height="50" Content="Fetch" Margin="5" Click="btnFetch_Click"></Button>
+            <Button Name="btnDelete" Width="100" Height="50" Content="Delete" Margin="5" Click="btnDelete_Click"></Button>
+            <Button Name="btnClear" Width="100" Height="50" Content="Clear" Margin="5" Click="btnClear_Click"></Button>
+        </StackPanel>
     </Grid>
 </Window>

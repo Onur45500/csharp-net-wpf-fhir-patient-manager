@@ -20,5 +20,25 @@ namespace csharp_net_wpf_fhir_patient_manager
         {
             InitializeComponent();
         }
+
+        private void btnFetch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void txtFhirUrl_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
