@@ -18,12 +18,13 @@
             <ScrollViewer Width="auto">
                 <!--<ListView Name="lvPatients" Grid.Row="0" Margin="5" FontSize="10" Width="auto" Height="auto"></ListView>-->
 
-                <ListView Name="lvPatients">
+                <ListView Name="lvPatients" ItemsSource="{Binding Entries}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn 
-                        Header="Code" />
-                           
+                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}"
+                        Header="First name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding LastName}"
+                        Header="Surname" />
                         </GridView>
                     </ListView.View>
                 </ListView>

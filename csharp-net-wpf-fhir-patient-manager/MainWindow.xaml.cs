@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using csharp_net_wpf_fhir_patient_manager.Models;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 
@@ -13,7 +15,15 @@ namespace csharp_net_wpf_fhir_patient_manager
         public MainWindow()
         {
             InitializeComponent();
+
+            Entries = new ObservableCollection<PatientModel>();
+
+            this.DataContext = this;
         }
+
+
+        public ObservableCollection<PatientModel> Entries { get; set; }
+
 
         // Button Fetch Click event - fetch patients
         private async void btnFetch_Click(object sender, RoutedEventArgs e)
@@ -34,7 +44,7 @@ namespace csharp_net_wpf_fhir_patient_manager
                 Bundle patientBundle = await fhirClient.SearchAsync<Patient>();
 
                 // Clear the current list of patients
-                lvPatients.Items.Clear();
+                Entries.Clear();
 
                 // Parse the response and add patients to the ListView
                 List<string> patientList = new List<string>();
@@ -44,8 +54,16 @@ namespace csharp_net_wpf_fhir_patient_manager
                     if (entry.Resource is Patient patient)
                     {
                         // Get the patient's name
-                        string patientName = GetPatientName(patient);
-                        patientList.Add(patientName);
+                        string patientFirstName = GetPatientFirstName(patient);
+                        string patientLastName = GetPatientSurname(patient);
+
+                        var patientCreated = new PatientModel
+                        {
+                            FirstName = patientFirstName,
+                            LastName = patientLastName
+                        };
+
+                        Entries.Add(patientCreated);
                     }
                 }
 
@@ -62,12 +80,22 @@ namespace csharp_net_wpf_fhir_patient_manager
         }
 
         // Helper method to get the patient's name
-        private string GetPatientName(Patient patient)
+        private string GetPatientFirstName(Patient patient)
         {
             if (patient.Name.Count > 0)
             {
                 var humanName = patient.Name[0];
-                return $"{humanName.GivenElement[0]} {humanName.Family}";
+                return $"{humanName.GivenElement[0]}";
+            }
+            return "Unnamed Patient";
+        }
+
+        private string GetPatientSurname(Patient patient)
+        {
+            if (patient.Name.Count > 0)
+            {
+                var humanName = patient.Name[0];
+                return $"{humanName.Family}";
             }
             return "Unnamed Patient";
         }
