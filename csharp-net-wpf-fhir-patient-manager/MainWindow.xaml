@@ -4,35 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:csharp_net_wpf_fhir_patient_manager"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="400">
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="MainWindow" Height="500" Width="450">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="0.4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.3*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
             <TextBlock Text="Url" FontSize="10" Margin="5 5 0 0"></TextBlock>
             <TextBox Name="txtFhirUrl" Width="auto" Margin="5" TextChanged="txtFhirUrl_TextChanged"></TextBox>
-            <ScrollViewer Width="auto">
-                <!--<ListView Name="lvPatients" Grid.Row="0" Margin="5" FontSize="10" Width="auto" Height="auto"></ListView>-->
+            <TextBlock Text="Token" FontSize="10" Margin="5 5 0 0"></TextBlock>
+            <TextBox Name="txtToken" Width="auto" Margin="5" TextChanged="txtToken_TextChanged"></TextBox>
+            <TextBlock Text="First Name" FontSize="10" Margin="5 5 0 0"></TextBlock>
+            <TextBox Name="txtFirstName" Width="auto" Margin="5" Text="{Binding FirstNameSearch, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Text="Last Name" FontSize="10" Margin="5 5 0 0"></TextBlock>
+            <TextBox Name="txtLastName" Width="auto" Margin="5" Text="{Binding LastNameSearch, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <Button Content="Search" Command="{Binding SearchCommand}" Margin="5"/>
+        </StackPanel>
 
+        <ScrollViewer Width="auto" VerticalScrollBarVisibility="Auto" Grid.Row="1">
+            <StackPanel>
                 <ListView Name="lvPatients" ItemsSource="{Binding Entries}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}"
-                        Header="First name" />
-                            <GridViewColumn DisplayMemberBinding="{Binding LastName}"
-                        Header="Surname" />
+                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="First name" />
+                            <GridViewColumn DisplayMemberBinding="{Binding LastName}" Header="Surname" />
                         </GridView>
                     </ListView.View>
                 </ListView>
-            </ScrollViewer>
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
-
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" Grid.RowSpan="2">
             <Button Name="btnAdd" Width="100" Height="50" Content="Fetch" Margin="5" Click="btnFetch_Click"></Button>
             <Button Name="btnDelete" Width="100" Height="50" Content="Delete" Margin="5" Click="btnDelete_Click"></Button>
             <Button Name="btnClear" Width="100" Height="50" Content="Clear" Margin="5" Click="btnClear_Click"></Button>
